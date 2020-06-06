@@ -1,0 +1,12 @@
+*****************************************************************
+                    PACOTES NECESSÁRIOS
+*****************************************************************
+sudo apt-get install python3-tk
+pip3 install numpy
+pip3 install sympy
+pip3 install matplotlib
+pip3 install control
+pip3 install slycot
+
+Dicas em caso de erro:
+pip3 install --upgrade pip
