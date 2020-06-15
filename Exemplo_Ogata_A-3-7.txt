@@ -1,0 +1,47 @@
+(K367_math) leandro[~]$python3
+Python 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+>>> # EXEMPLO OGATA A.3.7 PÁG 82
+>>>
+>>> from sympy import *
+>>> Z1, Z2, Z3, Z4 = symbols('Z1 Z2 Z3 Z4')
+>>> Vin, Vout = symbols('Vin Vout')
+>>> init_printing()
+>>>
+>>> #Divisor de tensão do ponto B
+>>> V = Z1/(Z1+Z2)*Vin
+>>> V
+ Vin⋅Z₁
+───────
+Z₁ + Z₂
+>>> 
+>>> in_minus = (Vin-V)/Z3 + (Vout-V)/Z4
+>>> in_minus
+   Vin⋅Z₁             Vin⋅Z₁      
+- ─────── + Vout   - ─────── + Vin
+  Z₁ + Z₂            Z₁ + Z₂      
+──────────────── + ───────────────
+       Z₄                 Z₃      
+>>> 
+>>> #Encontrando a equação da saída
+>>> ANS = solve(in_minus,Vout)
+>>> ANS
+⎡Vin⋅(Z₁⋅Z₃ - Z₂⋅Z₄)⎤
+⎢───────────────────⎥
+⎣    Z₃⋅(Z₁ + Z₂)   ⎦
+>>> 
+>>> Vo = ANS[0]
+>>>
+>>> # Encontrando a função de transferência
+>>> FT = Vo/Vin
+>>> FT
+Z₁⋅Z₃ - Z₂⋅Z₄
+─────────────
+ Z₃⋅(Z₁ + Z₂)
+>>> 
+>>> print(FT)
+(Z1*Z3 - Z2*Z4)/(Z3*(Z1 + Z2))
+>>> 
+
