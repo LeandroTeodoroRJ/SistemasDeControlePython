@@ -1,0 +1,51 @@
+Python 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from sympy import *
+>>> from sympy.abc import s
+>>> R1, R2, C1, C2 = symbols("R1 R2 C1 C2")
+>>> init_printing()
+>>> 
+>>> Z1 = 1/(C1*s+1/R1)
+>>> Z1
+    1    
+─────────
+       1 
+C₁⋅s + ──
+       R₁
+>>> 
+>>> 
+>>> Z2 = R2+1/(C2*s)
+>>> Z2
+      1  
+R₂ + ────
+     C₂⋅s
+>>>
+>>> #Função de transferência literal
+>>> H = cancel(-Z2/Z1)
+>>> H
+ ⎛             2                        ⎞ 
+-⎝C₁⋅C₂⋅R₁⋅R₂⋅s  + C₁⋅R₁⋅s + C₂⋅R₂⋅s + 1⎠ 
+──────────────────────────────────────────
+                 C₂⋅R₁⋅s                  
+>>> 
+>>> #Utilizando os valores
+>>> C1 = 5.6e-6
+>>> C2 = 0.1e-6
+>>> R1 = 360e3
+>>> R2 = 220e3
+>>>              
+>>> 
+>>> print(H)
+-(C1*C2*R1*R2*s**2 + C1*R1*s + C2*R2*s + 1)/(C2*R1*s)
+>>> FT = -(C1*C2*R1*R2*s**2 + C1*R1*s + C2*R2*s + 1)/(C2*R1*s)                   
+>>> FT = cancel(FT)
+>>> FT
+     ⎛       2                                        ⎞ 
+-1.0⋅⎝1.232⋅s  + 56.6111111111111⋅s + 27.7777777777778⎠ 
+────────────────────────────────────────────────────────
+                           s                            
+     
+>>> 
+ 
+
