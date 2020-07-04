@@ -1,0 +1,49 @@
+Python 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from sympy import *
+>>> from sympy.abc import s,L,C,v
+>>> R1,R2,i1,i2,vc = symbols("R1 R2 i1 i2 vc")
+>>>
+>>> #Equação da malha 1 
+>>> M1 = (R1+L*s)*i1-L*s*i2-v
+>>>
+>>> #Equação da malha 2
+>>> M2 = (L*s+R2+1/(C*s))*i2-L*s*i1
+>>> pprint(M2)
+             ⎛            1 ⎞
+-L⋅i₁⋅s + i₂⋅⎜L⋅s + R₂ + ───⎟
+             ⎝           C⋅s⎠
+>>> pprint(M1)
+-L⋅i₂⋅s + i₁⋅(L⋅s + R₁) - v
+>>> 
+>>>
+>>> #Resolvendo o sistema linear para v e i2 
+>>> LinSys = solve((M1,M2),v,i2)
+>>>
+>>> I2 = LinSys[i2]
+>>> pprint(I2)
+             2     
+     C⋅L⋅i₁⋅s      
+───────────────────
+     2             
+C⋅L⋅s  + C⋅R₂⋅s + 1
+>>> V = LinSys[v]
+>>> pprint(V)
+   ⎛     2  3              ⎛     2             ⎞⎞
+i₁⋅⎝- C⋅L ⋅s  + (L⋅s + R₁)⋅⎝C⋅L⋅s  + C⋅R₂⋅s + 1⎠⎠
+─────────────────────────────────────────────────
+                    2                            
+               C⋅L⋅s  + C⋅R₂⋅s + 1               
+>>> 
+>>> # Resposta
+>>> cancel(I2/V)
+C*L*s**2/(C*L*R1*s**2 + C*L*R2*s**2 + C*R1*R2*s + L*s + R1)
+>>> pprint(_)
+                        2                   
+                   C⋅L⋅s                    
+────────────────────────────────────────────
+        2           2                       
+C⋅L⋅R₁⋅s  + C⋅L⋅R₂⋅s  + C⋅R₁⋅R₂⋅s + L⋅s + R₁
+>>> 
+
