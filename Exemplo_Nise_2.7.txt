@@ -1,0 +1,73 @@
+Python 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from sympy import *
+>>> from fractions import *
+>>> from sympy.abc import s,i,L,R,C
+>>> init_printing()
+>>> 
+>>> v = (L*s+R+1/(C*s))*i
+>>> v
+  ⎛           1 ⎞
+i⋅⎜L⋅s + R + ───⎟
+  ⎝          C⋅s⎠
+>>> vc = i*1/(C*s)
+>>> vc
+ i 
+───
+C⋅s
+>>> G = vc/v
+>>> G
+         1         
+───────────────────
+    ⎛           1 ⎞
+C⋅s⋅⎜L⋅s + R + ───⎟
+    ⎝          C⋅s⎠
+>>> cancel(_)
+        1         
+──────────────────
+     2            
+C⋅L⋅s  + C⋅R⋅s + 1
+>>> 
+>>> 
+>>> _*((1/L*C)/(1/L*C))
+        1         
+──────────────────
+     2            
+C⋅L⋅s  + C⋅R⋅s + 1
+>>> 
+>>> G = cancel(G)
+>>> G
+        1         
+──────────────────
+     2            
+C⋅L⋅s  + C⋅R⋅s + 1
+>>> 
+>>> #Extraindo o numerador e o denominador da função de transferência 
+>>> FT = fraction(G)
+>>> FT
+⎛        2            ⎞
+⎝1, C⋅L⋅s  + C⋅R⋅s + 1⎠
+>>>
+>>> 
+>>> num = FT[0]/(L*C)
+>>> #Resposta numerador
+>>> num
+ 1 
+───
+C⋅L
+>>> den = FT[1]/(L*C)
+>>> den
+     2            
+C⋅L⋅s  + C⋅R⋅s + 1
+──────────────────
+       C⋅L        
+>>>
+>>> #Resposta denominador
+>>> simplify(den)
+ 2   R⋅s    1 
+s  + ─── + ───
+      L    C⋅L
+>>> 
+ 
+
